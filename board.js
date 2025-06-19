@@ -8,11 +8,12 @@ const board_array = Array(11).fill().map(() => Array(11).fill('empty'));
 
 // is the piece selected?
 let highlight = false;
+const highlight_spot = Array(2).fill(-1);
 
 // dimenions is in pixels
-function draw_circle_on_canvas(context, row, col, radius){
+function draw_circle_on_canvas(context, index1, index2, radius){
 	context.beginPath();
-	context.arc(row,col,radius, 0, Math.PI * 2, true);
+	context.arc(50*index1 + 25,50*index2 + 25,radius, 0, Math.PI * 2, true);
 	context.fillStyle = "black";
 	context.fill();
 	context.stroke();
@@ -40,19 +41,27 @@ function handleClick(event){
 
 			if(board_array[index1][index2] === 'p'){
 				// have some highlighting effect here
+				
 
 				highlight = true;
+				highlight_spot[0] = index1;
+				highlight_spot[1] = index2;
 
 				return;
 			}
 
 			if(highlight === true){
-				// remove the circle 
+				// remove the circle
+				ctx.clearRect(highlight_spot[0]*50, 50*highlight_spot[1], 50, 50);
+				ctx.strokeRect(highlight_spot[0]*50, highlight_spot[1]*50, 50, 50);
+				board_array[highlight_spot[0]][highlight_spot[1]] = "empty";
+
+				console.log(board_array);		 
 
 				draw_circle_on_canvas(
 					ctx,
-					(index1 * 50) + 25,
-					(index2 *50) + 25,
+					index1,
+					index2,
 					15);
 
 				highlight = false;
@@ -76,7 +85,7 @@ function draw_start() {
 			}
 		}
 				
-		draw_circle_on_canvas(ctx, 25, 25, 15);
+		draw_circle_on_canvas(ctx, 0, 0, 15);
 
 		board_array[0][0] = 'p';
 
