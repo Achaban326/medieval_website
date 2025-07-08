@@ -54,9 +54,7 @@ function handleClick(event){
 				// remove the circle
 				ctx.clearRect(highlight_spot[0]*50, 50*highlight_spot[1], 50, 50);
 				ctx.strokeRect(highlight_spot[0]*50, highlight_spot[1]*50, 50, 50);
-				board_array[highlight_spot[0]][highlight_spot[1]] = "empty";
-
-				console.log(board_array);		 
+				board_array[highlight_spot[0]][highlight_spot[1]] = "empty";		 
 
 				draw_circle_on_canvas(
 					ctx,
